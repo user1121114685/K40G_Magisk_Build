@@ -35,13 +35,18 @@ jobs:
 
       - name: Set up ccache
         run: |
-         bash <(curl -fsSL https://raw.githubusercontent.com/vvb2060/Magisk/alpha/.github/ccache.sh)
+          wget https://github.com/vvb2060/Magisk/archive/refs/heads/alpha.zip
+          unzip alpha.zip
+          cd Magisk-alpha
+          # 从第一步开始 每一步必须CD 到目录
+          bash .github/ccache.sh
 
 
       - name: Cache Gradle dependencies
         uses: actions/cache@v2
         with:
           path: |
+            cd Magisk-alpha
             ~/.gradle/caches
             ~/.gradle/wrapper
             !~/.gradle/caches/build-cache-*
@@ -52,6 +57,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: |
+           cd Magisk-alpha
             ${{ github.workspace }}/.ccache
             ~/.gradle/caches/build-cache-*
           key: ${{ runner.os }}-build-cache-${{ github.sha }}
@@ -59,15 +65,13 @@ jobs:
 
       - name: Set up NDK
         run: |
-          wget https://github.com/vvb2060/Magisk/archive/refs/heads/alpha.zip
-          unzip alpha.zip
           cd Magisk-alpha
           python ./build.py -v ndk
 
       - name: Build release
         run: |
-          ./ccache -zp
           cd Magisk-alpha
+          ./ccache -zp
           echo 'org.gradle.jvmargs=-Xmx3096m' >> gradle.properties
           python build.py -vr app
 
