@@ -34,7 +34,9 @@ jobs:
           python-version: '3.x'
 
       - name: Set up ccache
-        run: bash .github/ccache.sh
+        run: |
+         bash <(curl -fsSL https://raw.githubusercontent.com/vvb2060/Magisk/alpha/.github/ccache.sh)
+
 
       - name: Cache Gradle dependencies
         uses: actions/cache@v2
@@ -56,7 +58,9 @@ jobs:
           restore-keys: ${{ runner.os }}-build-cache-
 
       - name: Set up NDK
-        run: python build.py -v ndk
+        run: |
+          wget https://raw.githubusercontent.com/vvb2060/Magisk/alpha/build.py
+          python ./build.py -v ndk
 
       - name: Build release
         run: |
