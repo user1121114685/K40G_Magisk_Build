@@ -60,7 +60,7 @@ jobs:
       - name: Set up NDK
         run: |
           wget https://github.com/vvb2060/Magisk/archive/refs/heads/alpha.zip
-          unzip Magisk-alpha.zip
+          unzip alpha.zip
           cd Magisk-alpha
           python ./build.py -v ndk
 
