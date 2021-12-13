@@ -1,0 +1,1 @@
+# K40G_Magisk_Build
