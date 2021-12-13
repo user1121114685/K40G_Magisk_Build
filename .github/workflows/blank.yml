@@ -69,7 +69,7 @@ jobs:
           ./ccache -zp
           cd Magisk-alpha
           echo 'org.gradle.jvmargs=-Xmx3096m' >> gradle.properties
-          python build.py -vr all
+          python build.py -vr app
 
       - name: Stop gradle daemon
         run: |
