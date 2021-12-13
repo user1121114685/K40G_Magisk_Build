@@ -66,8 +66,8 @@ jobs:
 
       - name: Build release
         run: |
-          cd Magisk-alpha
           ./ccache -zp
+          cd Magisk-alpha
           echo 'org.gradle.jvmargs=-Xmx3096m' >> gradle.properties
           python build.py -vr all
 
