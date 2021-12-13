@@ -59,17 +59,22 @@ jobs:
 
       - name: Set up NDK
         run: |
-          wget https://raw.githubusercontent.com/vvb2060/Magisk/alpha/build.py
+          wget https://github.com/vvb2060/Magisk/archive/refs/heads/alpha.zip
+          unzip Magisk-alpha.zip
+          cd Magisk-alpha
           python ./build.py -v ndk
 
       - name: Build release
         run: |
+          cd Magisk-alpha
           ./ccache -zp
           echo 'org.gradle.jvmargs=-Xmx3096m' >> gradle.properties
           python build.py -vr all
 
       - name: Stop gradle daemon
-        run: ./gradlew --stop
+        run: |
+         cd Magisk-alpha
+          ./gradlew --stop
 
       # Only upload artifacts built on Linux
       - name: Upload build artifact
@@ -77,4 +82,4 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: ${{ github.sha }}
-          path: out
+          path: Magisk-alpha/out
